@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think Foods - Exquisite Dining Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C1810;
+            --secondary: #8B4513;
+            --accent: #D4AF37;
+            --cream: #F5F1E8;
+            --dark-cream: #E8DCC8;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --shadow: rgba(44, 24, 16, 0.15);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(245, 241, 232, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            box-shadow: 0 2px 20px var(--shadow);
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            background: rgba(245, 241, 232, 0.98);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40%;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-auth {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-auth {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--primary);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .btn-auth.login:hover {
+            border-color: var(--primary);
+        }
+
+        .btn-auth.signup {
+            background: var(--primary);
+            color: var(--cream);
+        }
+
+        .btn-auth.signup:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            z-index: 1;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+            animation: slideUp 1s ease-out;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: slideUp 1s ease-out 0.2s both;
+            font-family: 'Crimson Text', serif;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            animation: slideUp 1s ease-out 0.4s both;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 3rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #F5D76E;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 8rem 5%;
+            background: var(--white);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .about-content p {
+            font-size: 1.3rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            color: #4A4A4A;
+        }
+
+        .about-image {
+            position: relative;
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, transparent 100%);
+            opacity: 0.2;
+        }
+
+        .about-image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 6rem 5%;
+            background: var(--cream);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .section-header p {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 1rem 2rem;
+            background: var(--white);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .menu-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .menu-item {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid transparent;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow);
+            border-top-color: var(--accent);
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .menu-item-price {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.6rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .menu-item p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .add-to-cart:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 6rem 5%;
+            background: var(--white);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+        }
+
+        .contact-info {
+            background: var(--cream);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .info-item {
+            margin-bottom: 2rem;
+        }
+
+        .info-item h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .info-item p {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.8rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .contact-form {
+            background: var(--cream);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .contact-form h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--dark-cream);
+            border-radius: 4px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Cart */
+        .cart-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -5px 0 25px var(--shadow);
+            padding: 2rem;
+            transition: var(--transition);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .cart-panel.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .cart-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--cream);
+            border-radius: 4px;
+        }
+
+        .cart-item-info h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-item-price {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #d32f2f;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-total {
+            border-top: 2px solid var(--cream);
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            border-radius: 4px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: var(--transition);
+        }
+
+        .checkout-btn:hover {
+            background: #F5D76E;
+            transform: translateY(-2px);
+        }
+
+        .cart-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(212, 175, 55, 0.5);
+            transition: var(--transition);
+            z-index: 1500;
+        }
+
+        .cart-badge:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--primary);
+            color: var(--white);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        /* Auth Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 8px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .auth-toggle a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .auth-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* User Menu */
+        .user-menu {
+            position: relative;
+        }
+
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .user-greeting:hover {
+            background: var(--dark-cream);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 5px 25px var(--shadow);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            min-width: 200px;
+            display: none;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .user-dropdown a:hover {
+            background: var(--cream);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .section-header h2 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cart-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--cream);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--cream);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">THINK FOODS</a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('menu')">Menu</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+            <div class="nav-auth">
+                <div id="authButtons">
+                    <button class="btn-auth login" onclick="showLogin()">Login</button>
+                    <button class="btn-auth signup" onclick="showSignup()">Sign Up</button>
+                </div>
+                <div id="userMenu" class="user-menu hidden">
+                    <div class="user-greeting" onclick="toggleUserDropdown()">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User</span>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" onclick="showPage('orders')">My Orders</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>THINK FOODS</h1>
+                <p class="hero-subtitle">Where Every Meal Tells a Story</p>
+                <div class="hero-cta">
+                    <a href="#" class="btn-primary" onclick="showPage('menu')">Explore Menu</a>
+                    <a href="#" class="btn-secondary" onclick="showPage('contact')">Reserve Table</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="about-container">
+                <div class="about-content">
+                    <h2>Experience Culinary Excellence</h2>
+                    <p>At Think Foods, we believe that dining is an art form. Each dish is crafted with passion, precision, and the finest ingredients to create an unforgettable experience for your palate.</p>
+                    <p>From traditional flavors to contemporary cuisine, our menu celebrates the diversity of taste while maintaining the highest standards of quality and presentation.</p>
+                    <a href="#" class="btn-primary" onclick="showPage('about')">Discover Our Story</a>
+                </div>
+                <div class="about-image">
+                    <div class="about-image-placeholder">
+                        <p>Elegant Dining Experience</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Menu Page -->
+    <div id="menu" class="page">
+        <section class="menu-section">
+            <div class="section-header">
+                <h2>Our Exquisite Menu</h2>
+                <p>Curated with passion, served with excellence</p>
+            </div>
+
+            <div class="menu-categories">
+                <button class="category-btn active" onclick="filterMenu('all')">All</button>
+                <button class="category-btn" onclick="filterMenu('appetizers')">Appetizers</button>
+                <button class="category-btn" onclick="filterMenu('main')">Main Course</button>
+                <button class="category-btn" onclick="filterMenu('desserts')">Desserts</button>
+                <button class="category-btn" onclick="filterMenu('beverages')">Beverages</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu items will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <section class="about-section">
+            <div class="section-header">
+                <h2>Our Story</h2>
+                <p>A journey of flavors and traditions</p>
+            </div>
+            <div class="about-container">
+                <div class="about-content">
+                    <h2>Crafting Memories Since Day One</h2>
+                    <p>Think Foods was born from a simple yet profound belief: food is more than sustenance—it's an experience, a connection, and a celebration of life's finest moments.</p>
+                    <p>Our chefs bring decades of culinary expertise, blending traditional techniques with innovative approaches to create dishes that delight and inspire.</p>
+                    <p>Every ingredient is carefully selected, every dish thoughtfully prepared, and every meal served with genuine warmth and hospitality.</p>
+                </div>
+                <div class="about-image">
+                    <div class="about-image-placeholder">
+                        <p>Our Culinary Philosophy</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <section class="contact-section">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>We'd love to hear from you</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Visit Us</h3>
+                    <div class="info-item">
+                        <h4>Address</h4>
+                        <p>Plot A 12/16C, Block 5-A<br>Block 5 A Block 5 Nazimabad<br>Karachi, 74600</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Phone</h4>
+                        <p>0312 2175855</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Opening Hours</h4>
+                        <div class="hours-grid">
+                            <p>Monday</p><p>6:00 PM - 3:00 AM</p>
+                            <p>Tuesday</p><p>6:00 PM - 3:00 AM</p>
+                            <p>Wednesday</p><p>6:00 PM - 3:00 AM</p>
+                            <p>Thursday</p><p>6:00 PM - 3:00 AM</p>
+                            <p>Friday</p><p>6:00 PM - 3:00 AM</p>
+                            <p>Saturday</p><p>6:00 PM - 3:00 AM</p>
+                            <p>Sunday</p><p>Closed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>Send Message</h3>
+                    <form onsubmit="handleContact(event)">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Orders Page -->
+    <div id="orders" class="page">
+        <section class="menu-section">
+            <div class="section-header">
+                <h2>My Orders</h2>
+                <p>Track your delicious journey</p>
+            </div>
+            <div id="ordersContainer" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+                <p style="text-align: center; font-size: 1.3rem; color: #666;">No orders yet. Start exploring our menu!</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Panel -->
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="text-align: center; color: #999;">Your cart is empty</p>
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cartTotal">Rs. 0</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Cart Badge -->
+    <div class="cart-badge" onclick="toggleCart()">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="authTitle">Login</h3>
+                <button class="close-modal" onclick="closeAuthModal()">×</button>
+            </div>
+            <form id="authForm" onsubmit="handleAuth(event)">
+                <div class="form-group" id="nameGroup" style="display: none;">
+                    <label>Full Name</label>
+                    <input type="text" id="authName">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="authEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="authPassword" required>
+                </div>
+                <button type="submit" class="submit-btn" id="authSubmitBtn">Login</button>
+            </form>
+            <div class="auth-toggle">
+                <p id="authToggleText">Don't have an account? <a onclick="toggleAuthMode()">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Think Foods. All rights reserved.</p>
+        <p>Crafted with passion and dedication</p>
+        <div class="social-links">
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Data
+        const menuItems = [
+            // Appetizers
+            { id: 1, name: 'Dynamite Chicken', category: 'appetizers', price: 850, description: 'Crispy chicken tossed in our signature spicy dynamite sauce' },
+            { id: 2, name: 'Chicken Wings', category: 'appetizers', price: 750, description: 'Perfectly seasoned and grilled to perfection' },
+            { id: 3, name: 'Chicken Tikka', category: 'appetizers', price: 900, description: 'Tender marinated chicken pieces with aromatic spices' },
+            { id: 4, name: 'Seekh Kabab', category: 'appetizers', price: 800, description: 'Flavorful minced meat kebabs on skewers' },
+            
+            // Main Course
+            { id: 5, name: 'Chicken Handi', category: 'main', price: 1200, description: 'Rich and creamy chicken curry cooked in traditional handi' },
+            { id: 6, name: 'Chicken Karahi', category: 'main', price: 1300, description: 'Spicy and aromatic chicken curry with tomatoes and peppers' },
+            { id: 7, name: 'Mutton Karahi', category: 'main', price: 1800, description: 'Tender mutton pieces in rich tomato-based gravy' },
+            { id: 8, name: 'Biryani Special', category: 'main', price: 1100, description: 'Fragrant basmati rice layered with tender meat and spices' },
+            { id: 9, name: 'Pulao', category: 'main', price: 900, description: 'Aromatic rice dish cooked with meat and whole spices' },
+            { id: 10, name: 'Dal Makhani', category: 'main', price: 650, description: 'Creamy black lentils slow-cooked with butter and cream' },
+            
+            // Desserts
+            { id: 11, name: 'Gulab Jamun', category: 'desserts', price: 350, description: 'Soft milk dumplings soaked in rose-flavored syrup' },
+            { id: 12, name: 'Kheer', category: 'desserts', price: 300, description: 'Traditional rice pudding with cardamom and nuts' },
+            { id: 13, name: 'Ras Malai', category: 'desserts', price: 400, description: 'Delicate cheese patties in sweetened milk' },
+            { id: 14, name: 'Kulfi Falooda', category: 'desserts', price: 450, description: 'Traditional ice cream with vermicelli and rose syrup' },
+            
+            // Beverages
+            { id: 15, name: 'Fresh Lime Soda', category: 'beverages', price: 200, description: 'Refreshing lime with sparkling water' },
+            { id: 16, name: 'Mango Lassi', category: 'beverages', price: 300, description: 'Sweet yogurt drink blended with mango' },
+            { id: 17, name: 'Mint Margarita', category: 'beverages', price: 350, description: 'Fresh mint blended with lemon and ice' },
+            { id: 18, name: 'Kashmiri Tea', category: 'beverages', price: 250, description: 'Pink tea with aromatic spices and nuts' }
+        ];
+
+        // State
+        let cart = [];
+        let currentUser = null;
+        let isLoginMode = true;
+        let orders = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMenu();
+            updateCart();
+            
+            // Check for saved user
+            const savedUser = localStorage.getItem('thinkFoodsUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateAuthUI();
+            }
+
+            // Load saved cart
+            const savedCart = localStorage.getItem('thinkFoodsCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCart();
+            }
+
+            // Load orders
+            const savedOrders = localStorage.getItem('thinkFoodsOrders');
+            if (savedOrders) {
+                orders = JSON.parse(savedOrders);
+            }
+
+            // Scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+
+        // Navigation
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageName).classList.add('active');
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (pageName === 'orders') {
+                loadOrders();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Menu Functions
+        function loadMenu(category = 'all') {
+            const menuGrid = document.getElementById('menuGrid');
+            const filteredItems = category === 'all' 
+                ? menuItems 
+                : menuItems.filter(item => item.category === category);
+
+            menuGrid.innerHTML = filteredItems.map(item => `
+                <div class="menu-item">
+                    <div class="menu-item-header">
+                        <h3>${item.name}</h3>
+                        <span class="menu-item-price">Rs. ${item.price}</span>
+                    </div>
+                    <p>${item.description}</p>
+                    <button class="add-to-cart" onclick="addToCart(${item.id})">Add to Order</button>
+                </div>
+            `).join('');
+        }
+
+        function filterMenu(category) {
+            loadMenu(category);
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Cart Functions
+        function addToCart(itemId) {
+            const item = menuItems.find(i => i.id === itemId);
+            const existingItem = cart.find(i => i.id === itemId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+
+            updateCart();
+            saveCart();
+
+            // Show feedback
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Added!';
+            btn.style.background = 'var(--accent)';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 1000);
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCart();
+            saveCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #999;">Your cart is empty</p>';
+                cartCount.textContent = '0';
+                cartTotal.textContent = 'Rs. 0';
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p class="cart-item-price">Rs. ${item.price} × ${item.quantity}</p>
+                    </div>
+                    <button class="remove-item" onclick="removeFromCart(${item.id})">×</button>
+                </div>
+            `).join('');
+
+            cartCount.textContent = totalItems;
+            cartTotal.textContent = `Rs. ${total}`;
+        }
+
+        function toggleCart() {
+            document.getElementById('cartPanel').classList.toggle('open');
+        }
+
+        function saveCart() {
+            localStorage.setItem('thinkFoodsCart', JSON.stringify(cart));
+        }
+
+        function checkout() {
+            if (!currentUser) {
+                alert('Please login to place an order');
+                closeAuthModal();
+                showLogin();
+                return;
+            }
+
+            if (cart.length === 0) {
+                alert('Your cart is empty');
+                return;
+            }
+
+            const order = {
+                id: Date.now(),
+                items: [...cart],
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                date: new Date().toLocaleString(),
+                status: 'Confirmed'
+            };
+
+            orders.push(order);
+            localStorage.setItem('thinkFoodsOrders', JSON.stringify(orders));
+
+            alert('Order placed successfully! We will prepare your delicious meal.');
+            cart = [];
+            updateCart();
+            saveCart();
+            toggleCart();
+        }
+
+        // Auth Functions
+        function showLogin() {
+            isLoginMode = true;
+            updateAuthModal();
+            document.getElementById('authModal').classList.add('active');
+        }
+
+        function showSignup() {
+            isLoginMode = false;
+            updateAuthModal();
+            document.getElementById('authModal').classList.add('active');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+        }
+
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            updateAuthModal();
+        }
+
+        function updateAuthModal() {
+            const title = document.getElementById('authTitle');
+            const nameGroup = document.getElementById('nameGroup');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const toggleText = document.getElementById('authToggleText');
+
+            if (isLoginMode) {
+                title.textContent = 'Login';
+                nameGroup.style.display = 'none';
+                submitBtn.textContent = 'Login';
+                toggleText.innerHTML = "Don't have an account? <a onclick='toggleAuthMode()'>Sign up</a>";
+            } else {
+                title.textContent = 'Sign Up';
+                nameGroup.style.display = 'block';
+                submitBtn.textContent = 'Sign Up';
+                toggleText.innerHTML = "Already have an account? <a onclick='toggleAuthMode()'>Login</a>";
+            }
+        }
+
+        function handleAuth(event) {
+            event.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const name = document.getElementById('authName').value;
+
+            if (isLoginMode) {
+                // Simple login - in production, validate against backend
+                const savedUsers = JSON.parse(localStorage.getItem('thinkFoodsUsers') || '[]');
+                const user = savedUsers.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    currentUser = { email: user.email, name: user.name };
+                    localStorage.setItem('thinkFoodsUser', JSON.stringify(currentUser));
+                    updateAuthUI();
+                    closeAuthModal();
+                    alert(`Welcome back, ${user.name}!`);
+                } else {
+                    alert('Invalid credentials. Please try again.');
+                }
+            } else {
+                // Simple signup
+                const savedUsers = JSON.parse(localStorage.getItem('thinkFoodsUsers') || '[]');
+                
+                if (savedUsers.find(u => u.email === email)) {
+                    alert('Email already registered. Please login.');
+                    return;
+                }
+
+                const newUser = { email, password, name };
+                savedUsers.push(newUser);
+                localStorage.setItem('thinkFoodsUsers', JSON.stringify(savedUsers));
+
+                currentUser = { email, name };
+                localStorage.setItem('thinkFoodsUser', JSON.stringify(currentUser));
+                updateAuthUI();
+                closeAuthModal();
+                alert(`Welcome to Think Foods, ${name}!`);
+            }
+
+            event.target.reset();
+        }
+
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userMenu = document.getElementById('userMenu');
+
+            if (currentUser) {
+                authButtons.classList.add('hidden');
+                userMenu.classList.remove('hidden');
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            } else {
+                authButtons.classList.remove('hidden');
+                userMenu.classList.add('hidden');
+            }
+        }
+
+        function toggleUserDropdown() {
+            document.getElementById('userDropdown').classList.toggle('active');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('thinkFoodsUser');
+            updateAuthUI();
+            document.getElementById('userDropdown').classList.remove('active');
+            alert('You have been logged out successfully');
+        }
+
+        // Contact Form
+        function handleContact(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            event.target.reset();
+        }
+
+        // Orders Page
+        function loadOrders() {
+            const container = document.getElementById('ordersContainer');
+            
+            if (orders.length === 0) {
+                container.innerHTML = '<p style="text-align: center; font-size: 1.3rem; color: #666;">No orders yet. Start exploring our menu!</p>';
+                return;
+            }
+
+            container.innerHTML = orders.map(order => `
+                <div style="background: white; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; box-shadow: 0 5px 25px var(--shadow);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 2px solid var(--cream); padding-bottom: 1rem;">
+                        <div>
+                            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary);">Order #${order.id}</h3>
+                            <p style="color: #666;">${order.date}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-size: 1.5rem; color: var(--accent); font-weight: 700;">Rs. ${order.total}</p>
+                            <p style="color: #4CAF50; font-weight: 600;">${order.status}</p>
+                        </div>
+                    </div>
+                    <div>
+                        ${order.items.map(item => `
+                            <p style="margin: 0.5rem 0;">${item.name} × ${item.quantity} - Rs. ${item.price * item.quantity}</p>
+                        `).join('')}
+                    </div>
+                </div>
+            `).reverse().join('');
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.user-menu')) {
+                document.getElementById('userDropdown').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
